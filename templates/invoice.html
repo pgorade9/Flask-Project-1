@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title> Online Market ! Invoice</title>
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block body %}
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Place Order</h4>
+            <table class='table table-striped table-dark'>
+                    <tr>
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Total Amount (Rs.)</th>
+                        <th scope="col">Make Payment</th>
+                    </tr>
+                    {% for invoice in invoices %}
+                    {% if invoice.payment_status=='unpaid' %}
+                    <tr>
+                        <td scope="rows">{{invoice.id}}</td>
+                        <td>{{invoice.timestamp.strftime('%a %d %b %Y')}}</td>
+                        <td>{{invoice.timestamp.strftime('%H %M %S')}}</td>
+                        <td>{{invoice.total}}</td>
+                        <td> {% set pay_amt = invoice.total*100 %}
+            
+                                <form action="/pay/{{invoice.id}}/{{invoice.total}}" method="POST">
+                                    <script
+                                    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="{{pub_key}}"
+                                    data-amount="{{pay_amt}}"
+                                    data-name="{{current_user.username}}"
+                                    data-description="Widget"
+                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    data-locale="auto">
+                                    </script>
+                                </form>
+                        </td>
+                        </tr>     
+                    {% endif %}
+                    {% endfor %}
+            </table>
+            <hr>
+            <h4>Current Orders</h4>
+            <table class='table table-striped table-dark'>
+                    <tr>
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Total Amount (Rs.)</th>
+                        <th scope="col">Order Status</th>
+                    </tr>
+                    {% for invoice in invoices %}
+                    {% if invoice.order_status=='received' %}
+                    <tr>
+                        <td scope="row">{{invoice.id}}</td>
+                        <td>{{invoice.timestamp.strftime('%a %d %b %Y')}}</td>
+                        <td>{{invoice.timestamp.strftime('%H : %M : %S')}}</td>
+                        <td>{{invoice.total}}</td>
+                        <td>{{invoice.order_status}}</td>
+                    </tr>     
+                    {% endif %}
+                   {% endfor %}
+            </table>
+            <hr>
+            <h4>Past Orders</h4>
+                <table class='table table-striped table-dark'>
+                    <tr>
+                        <th scope="col">Invoice Number</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Total Amount (Rs.)</th>
+                        <th scope="col">Order Status</th>
+                    </tr>
+                    {% for invoice in invoices %}
+                    {% if invoice.order_status=='delivered' %}
+                    
+                    <tr>
+                        <td>{{invoice.id}}</td>
+                        <td>{{invoice.timestamp.strftime('%a %d %b %Y')}}</td>
+                        <td>{{invoice.timestamp.strftime('%H %M %S')}}</td>
+                        <td>{{invoice.total}}</td>
+                        <td>{{invoice.order_status}}</td>
+                    </tr>     
+                    {% endif %}
+                   {% endfor %}
+                </table>
+
+            
+
+        </div>
+    </div>
+{% endblock %}

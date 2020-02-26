@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title> Online Market </title>
+{% endblock %}
+
+{% block body %}
+        <h1>Hello {{name}} !! </h1>
+        <br>
+        <h2>Welcome  !!</h2>
+
+        <form method="POST",action='/update/{{user.id}}'>
+                Name : &nbsp;
+                <input type="text" disabled='True' name={{user.name}} value= {{user.name}} required>
+                City: &nbsp;
+                <input type="text" name='city' placeholder={{user.city}} required pattern="[a-zA-Z]+">
+                Phone: &nbsp;
+                <input type="text" name='phone' placeholder={{user.phone}} maxlength="10" title="Please enter numbers only" required pattern="[0-9]+">&nbsp;
+                <input type="submit" value="Update!!">
+        </form>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+.jumbotron{
+    font-family: 'Abril',cursive;
+    font-size: 1.5em;
+    align-content: center;
+}
+
+body{
+    background:rgba(0,0,0,0.5);
+}
+
+#mymenu{
+    font-family: 'Lucida Sans';
+    font-size: 1em;
+    color:rgba(255,255 ,255);
+    align-content: center;
+}
+
+.linksright{
+    position: relative;
+    float: right;
+    text-decoration: none;
+}
+
+.linksleft{
+    position: relative;
+    float: left;
+    text-decoration: none;
+}
+
+#mycart{
+    display: none;
+    position: absolute;
+    top:100px;
+    float:right;
+    font-size: 0.5em;
+    background-color: bisque;
+}
+
+a{
+    display:inline block;
+    padding:2px;
+    margin:2px;
+    
+}
+
+a :hover{
+    background-color: cyan;
+    text-decoration: none;
+}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title> Online Market </title>
+
+<script src="{{ url_for('static',filename = 'js/main.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+        
+        <main role="main"  class="container">
+        <div class="row">
+        
+        {% for product in database %}
+        <form method="POST" action="/orders/{{product.id}}">
+        <div class="col-md-4">
+            <table class='table' >
+            <input type="hidden" name="{{product.id}}">
+            <tr id= 'mymenu'><td >{{product.name}}</td><td>{{product.price}}</td></tr>
+            <tr id= 'mymenu'><td colspan="2"><img width=180px height=120px src="{{ url_for('static',filename = 'product_images/'+ product.img) }}"/></td></tr>
+            <tr><td><input type="number" name="quantity" min=1 max=10 value=1></td><td><input type="submit" value="Add to Cart" class="btn btn-primary"></input></td></tr>
+            </table>
+        </div>
+        </form>
+        {% endfor %}
+        </div>
+    </main> 
+{% endblock %}
+
+
+
+

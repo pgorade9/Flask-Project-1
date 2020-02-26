@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+        {% block head %}{% endblock %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/a93a8cbee2.js"></script>
+
+        <!--link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+        <script src="{{url_for('static',filename='js/jquery-3.4.1-min.js')}}"></script>
+        <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script-->
+        
+    </head>
+    <body style="background:gray;">
+    
+            <div style=background-color:tomato;color:white; class="jumbotron text-center">
+                    <h1>Megabyte</h1>
+                    <p>A complete multicuisine experience !!!</p> 
+                    <div class ="linksleft">
+                      <a style="color:white;" href= "{{ url_for('home') }}">Home</a> |
+                      {% if current_user.is_authenticated %}
+                        Welcome {{current_user.username}} |
+                        <!--i class="fas fa-cart-arrow-down links"></i> |-->
+                        <!--input type="button" onclick="popup()" value = Cart/-->
+                      </div>
+                      <div class ="linksright">
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">My Cart<i class="fas fa-cart-arrow-down links"></i></button>|
+                        <a style="color:white;" href= "{{ url_for('invoice') }}">Your Orders</a> |
+                        <a style="color:white;" href= "{{ url_for('logout') }}">LogOut</a>
+                       
+                      {% else %}
+                        Welcome Guest |
+                        <a style="color:white;" href= "{{ url_for('login') }}">Login</a> |
+                        <a style="color:white;" href= "{{ url_for('register') }}">Register</a> |
+                        
+                      {% endif %}
+                    </div>
+            </div>
+       
+    <main role="main"  class="container">
+        <div class="row">
+                <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+              {% for category,message in messages %}
+                <div class='alert alert-{{ category }}'>
+                    <strong>{{ message }}</strong>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+        {% block body %}
+        
+        {% endblock %}
+        </div>
+        </div>
+    </main>
+    <div class="container">
+          <!-- Trigger the modal with a button -->
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  
+                </div>
+                <div class="modal-body">
+                  <h6>Your Order List</h6>
+              <table class='table'>
+                      <th>Product Name</th>
+                      <th>Quantity</th>
+                      <th>Price</th>
+                      <th>Total</th>
+                      <th>Action</th>
+              {% for order in orders %}
+                  <tr>
+                      <td>{{order.name}}</td><td>{{order.quantity}}</td><td>{{order.price}}</td><td>{{order.total}}</td><td><a href=/delete/orders/{{order.id}}>Remove</a></td>
+                  </tr>
+              {% endfor %}
+                  <tr>
+                      <td></td><td></td><td></td>
+                          <td>
+                              <form method='POST' action = "/invoice">
+                                  <input type="submit" value="Order Now !" class="btn btn-primary"></input>
+                              </form>
+                          </td>
+                  </tr>
+              </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+    </div>
+      
+    </body>
+
+</html>
+
+
+
+

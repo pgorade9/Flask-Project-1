@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title> Online Market </title>
+{% endblock %}
+
+{% block body %}
+<form method="POST",action='/addproduct'><h2>Enter a product</h2>
+    <table class='table'>
+        <tr><td>Product Name</td><td><input type="text" name = 'name' placeholder="Enter Name" title="Please enter characters [a-zA-Z] only" required pattern="[a-z A-Z]+"></td></tr>
+        <tr><td>Product Image</td><td><input type="text" name = 'image' placeholder="Image Name" title="Please enter characters [a-zA-Z] only" required pattern="[a-zA-Z0-9.]+"></td></tr>
+        <tr><td>Product Price</td><td><input type="text" name = 'price' placeholder="Enter Price" title="Please enter numberic only" required pattern="[0-9]+"></td></tr>
+        <tr><td><input type="submit" value="Submit !"></td></tr>
+    </table>
+</form>
+{% endblock %}
