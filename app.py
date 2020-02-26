@@ -7,9 +7,9 @@ import stripe
 
 app=Flask("__name__")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
-secret_key = 'sk_test_VnqwuPJG0G3b6Vqq8XoqZVIR00gFPcAG6l'
+secret_key = 'get_this_key_from_stripe'
 app.config['SECRET_KEY'] = secret_key
-pub_key = 'pk_test_Wb7KgyiT9WIQ6EfDgtH5PnvL004t86Ed6M'
+pub_key = 'get_this_key_from_stripe'
 
 stripe.api_key = secret_key
 
